@@ -35,7 +35,8 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useReportStore } from '@/stores/reportStore'
-import PeriodReportFilter from './shared/PeriodReportFilter.vue'
+// تم تصحيح المسار هنا
+import PeriodReportFilter from './PeriodReportFilter.vue'
 import AppTable from '@/components/ui/AppTable.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 

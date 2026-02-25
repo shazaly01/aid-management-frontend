@@ -2,6 +2,7 @@
   <div class="space-y-6">
     <div class="flex justify-between items-center">
       <h1 class="text-2xl font-bold text-text-primary">كشف حساب الخزينة</h1>
+      <AppButton v-if="reportData" variant="secondary">طباعة التقرير</AppButton>
     </div>
 
     <TreasuryReportFilter :loading="loading" @search="fetchReport" />
@@ -76,7 +77,6 @@
 import { storeToRefs } from 'pinia'
 import { useReportStore } from '@/stores/reportStore'
 import { useToast } from 'vue-toastification'
-
 import AppButton from '@/components/ui/AppButton.vue'
 import AppTable from '@/components/ui/AppTable.vue'
 import TreasuryReportFilter from './TreasuryReportFilter.vue'
