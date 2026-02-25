@@ -2,9 +2,7 @@
   <div class="space-y-6">
     <div class="flex justify-between items-center">
       <h1 class="text-2xl font-bold text-text-primary">كشف حساب الخزينة</h1>
-      <AppButton v-if="reportData" variant="secondary" @click="/* سيتم ربطها بالطباعة لاحقاً */">
-        طباعة التقرير
-      </AppButton>
+      <AppButton v-if="reportData" variant="secondary"> طباعة التقرير </AppButton>
     </div>
 
     <TreasuryReportFilter :loading="loading" @search="fetchReport" />
