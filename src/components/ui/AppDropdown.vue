@@ -1,4 +1,3 @@
-<!-- src\components\ui\AppDropdown.vue -->
 <template>
   <div class="relative w-full">
     <label
@@ -24,16 +23,18 @@
       appendTo="body"
       class="w-full"
       :pt="{
-        root: {
+        root: ({ state }) => ({
           class: [
             'w-full inline-flex relative cursor-pointer select-none',
-            'bg-gray-50 border-2 border-gray-300 transition-colors duration-200 rounded-md shadow-sm',
-            'dark:bg-surface-ground dark:border-surface-border',
+            'bg-gray-50 border-2 transition-colors duration-200 rounded-md shadow-sm',
+            'dark:bg-surface-ground',
             'hover:border-blue-500 dark:hover:border-primary',
-            'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-            'dark:focus:ring-primary dark:focus:border-primary',
+            // [تعديل هام] التمييز الديناميكي عند الدخول للمكون بواسطة Tab
+            state.focused
+              ? 'border-blue-500 ring-2 ring-blue-500 dark:border-primary dark:ring-primary outline-none'
+              : 'border-gray-300 dark:border-surface-border',
           ],
-        },
+        }),
         input: {
           class:
             'w-full p-2 text-gray-900 dark:text-text-primary bg-transparent border-0 focus:outline-none',
@@ -47,11 +48,11 @@
         },
         panel: {
           class: [
-            'bg-white dark:bg-[#1f2937]', // الخلفية الأساسية
+            'bg-white dark:bg-[#1f2937]',
             'border border-gray-300 dark:border-gray-600',
             'rounded-md shadow-2xl',
             'mt-1',
-            'overflow-hidden', // [هام] لقص أي محتوى يخرج عن الحواف المستديرة
+            'overflow-hidden',
           ],
         },
         header: {
@@ -64,18 +65,28 @@
         list: {
           class: [
             'p-1 max-h-60 overflow-y-auto custom-scrollbar',
-            'bg-white dark:bg-[#1f2937]', // [هام جداً] إضافة لون الخلفية للقائمة نفسها لمنع الشفافية
-            'relative z-10', // ضمان أن القائمة فوق أي حدود
+            'bg-white dark:bg-[#1f2937]',
+            'relative z-10',
           ],
         },
-        item: {
+        item: ({ context }) => ({
           class: [
             'p-2 rounded-md cursor-pointer overflow-hidden whitespace-nowrap',
-            'text-gray-700 dark:text-gray-200',
-            'hover:bg-gray-100 dark:hover:bg-gray-700',
-            'transition-colors duration-150', // تنعيم حركة الهوفر
+            'transition-colors duration-150',
+            // الحالة العادية (لا تركيز ولا تحديد)
+            !context.focused && !context.selected
+              ? 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+              : '',
+            // [تعديل هام] حالة التركيز باستخدام الأسهم (Keyboard Navigation)
+            context.focused && !context.selected
+              ? 'bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-white'
+              : '',
+            // حالة التحديد الفعلي (العنصر المختار مسبقاً)
+            context.selected
+              ? 'bg-blue-50 dark:bg-primary/20 text-blue-700 dark:text-primary font-bold'
+              : '',
           ],
-        },
+        }),
         itemGroup: {
           class: 'p-2 font-bold text-gray-500 dark:text-gray-400',
         },

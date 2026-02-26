@@ -1,3 +1,4 @@
+<!-- src\views\financial-assistances\FinancialAssistancesList.vue-->
 <template>
   <div>
     <div class="flex justify-between items-center mb-6">

@@ -1,3 +1,4 @@
+<!-- src\views\in-kind-assistances\InKindAssistancesTable.vue-->
 <template>
   <div class="space-y-4">
     <AppTable

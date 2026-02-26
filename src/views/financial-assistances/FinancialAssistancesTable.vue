@@ -1,3 +1,4 @@
+<!-- src\views\financial-assistances\FinancialAssistancesTable.vue-->
 <template>
   <div class="space-y-4">
     <AppTable
