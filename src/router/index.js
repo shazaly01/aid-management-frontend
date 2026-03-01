@@ -17,6 +17,7 @@ const BackupsList = () => import('@/views/settings/BackupsList.vue')
 
 // الكيانات الأساسية للنظام
 const BeneficiariesList = () => import('@/views/beneficiaries/BeneficiariesList.vue')
+const AreasList = () => import('@/views/areas/AreaIndex.vue')
 const InKindAssistancesList = () => import('@/views/in-kind-assistances/InKindAssistancesList.vue')
 const FinancialAssistancesList = () =>
   import('@/views/financial-assistances/FinancialAssistancesList.vue')
@@ -30,7 +31,7 @@ const BeneficiaryStatementReport = () => import('@/views/reports/BeneficiaryStat
 const InKindDistributionReport = () => import('@/views/reports/InKindDistributionReport.vue')
 const GlobalBalancesReport = () => import('@/views/reports/GlobalBalancesReport.vue')
 const FinancialAidByTypeReport = () => import('@/views/reports/FinancialAidByTypeReport.vue')
-
+const MessageCenter = () => import('@/views/messages/MessageCenter.vue')
 // صفحات الطباعة (بدون Layout)
 // const PrintTreasuryStatement = () => import('@/views/reports/print/PrintTreasuryStatement.vue')
 // const PrintBeneficiaryStatement = () =>
@@ -46,6 +47,13 @@ const routes = [
       // إعادة توجيه المسار الجذري إلى صفحة تسجيل الدخول
       { path: '', redirect: '/login' },
     ],
+  },
+
+  {
+    path: '/print/assistance',
+    name: 'PrintAssistance',
+    component: () => import('@/views/reports/PrintAssistance.vue'),
+    meta: { requiresAuth: true, layout: 'empty' }, // تأكد أن التخطيط لا يحتوي على Sidebar أو Navbar
   },
 
   // --- المسارات المحمية (تتطلب مصادقة) ---
@@ -83,6 +91,18 @@ const routes = [
       },
 
       // --- مسارات إدارة الجمعية والمساعدات ---
+      {
+        path: 'areas',
+        name: 'AreasList',
+        component: AreasList,
+        meta: { permission: 'area.view' }, // ربط المسار بصلاحية رؤية المناطق
+      },
+      {
+        path: 'messages',
+        name: 'MessageCenter',
+        component: MessageCenter,
+        meta: { permission: 'message.view' }, // ربط المسار بصلاحية عرض الرسائل
+      },
       {
         path: 'beneficiaries',
         name: 'BeneficiariesList',

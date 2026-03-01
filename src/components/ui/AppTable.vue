@@ -1,3 +1,4 @@
+<!--src\components\ui\AppTable.vue-->
 <template>
   <!-- الحاوية الخارجية الرئيسية (لا تغيير هنا) -->
   <div

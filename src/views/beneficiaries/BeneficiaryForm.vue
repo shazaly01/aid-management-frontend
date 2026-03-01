@@ -71,12 +71,7 @@
           required
         />
 
-        <AppInput
-          id="residence"
-          label="محل الإقامة"
-          v-model="form.residence"
-          placeholder="ادخل محل الإقامة بالتفصيل"
-        />
+        <AreasDropdown id="area-id" label="محل الإقامة (المنطقة)" v-model="form.area_id" required />
       </div>
     </div>
 
@@ -97,6 +92,7 @@ import { ref, watch, reactive } from 'vue'
 import AppInput from '@/components/ui/AppInput.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppDropdown from '@/components/ui/AppDropdown.vue'
+import AreasDropdown from '@/components/forms/AreasDropdown.vue'
 
 const props = defineProps({
   initialData: {

@@ -6,6 +6,16 @@
       :is-loading="loading"
       :row-clickable="false"
     >
+      <template #cell-name="{ item }">
+        <button
+          @click.stop="$emit('view-assistances', item)"
+          class="text-primary hover:text-primary-dark font-bold underline decoration-transparent hover:decoration-primary transition-all duration-200"
+          title="عرض سجل المساعدات"
+        >
+          {{ item.name }}
+        </button>
+      </template>
+
       <template #cell-contact_info="{ item }">
         <div class="flex flex-col">
           <span class="font-mono text-sm font-bold text-text-primary" title="الرقم الوطني">
@@ -24,6 +34,36 @@
               ></path>
             </svg>
             <span dir="ltr">{{ item.phone || 'لا يوجد' }}</span>
+          </span>
+        </div>
+      </template>
+
+      <template #cell-area_info="{ item }">
+        <div class="flex items-center text-sm text-gray-700 dark:text-text-secondary">
+          <svg
+            class="w-4 h-4 ml-1.5 text-gray-400 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+          </svg>
+          <span
+            class="truncate max-w-[200px] lg:max-w-[250px]"
+            :title="item.area?.full_path || 'غير محدد'"
+          >
+            {{ item.area?.full_path || 'غير محدد' }}
           </span>
         </div>
       </template>
@@ -128,23 +168,23 @@ const props = defineProps({
   },
 })
 
-// إضافة الأحداث الجديدة للمساعدات المالية والعينية
+// [التعديل الجديد]: تمت إضافة الحدث 'view-assistances'
 defineEmits([
   'edit-beneficiary',
   'delete-beneficiary',
   'page-change',
   'add-financial',
   'add-in-kind',
+  'view-assistances',
 ])
 
 const authStore = useAuthStore()
 
-// تحديث أعمدة الجدول لدمج الرقم الوطني والهاتف
 const tableHeaders = [
   { key: 'name', label: 'اسم المستفيد' },
-  { key: 'contact_info', label: 'الهوية والتواصل' }, // العمود المدمج
-  { key: 'residence', label: 'محل الإقامة' },
+  { key: 'contact_info', label: 'الهوية والتواصل' },
+  { key: 'area_info', label: 'المنطقة السكنية' },
   { key: 'family_members_count', label: 'أفراد الأسرة', cellClass: 'text-center' },
-  { key: 'actions', label: '', cellClass: 'w-44' }, // زيادة العرض قليلاً لاستيعاب الأزرار الجديدة
+  { key: 'actions', label: '', cellClass: 'w-44' },
 ]
 </script>

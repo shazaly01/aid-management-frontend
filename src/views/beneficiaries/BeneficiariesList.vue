@@ -1,3 +1,4 @@
+<!--src\views\beneficiaries\BeneficiariesList.vue-->
 <template>
   <div>
     <div class="flex justify-between items-center mb-6">
@@ -39,6 +40,7 @@
       @delete-beneficiary="openDeleteDialog"
       @add-financial="openFinancialModal"
       @add-in-kind="openInKindModal"
+      @view-assistances="openAssistancesModal"
     />
 
     <BeneficiaryModal
@@ -47,6 +49,12 @@
       :beneficiary="selectedBeneficiary"
       :is-saving="isEditing"
       @save="handleEdit"
+    />
+
+    <BeneficiaryAssistancesModal
+      v-if="isAssistancesModalOpen"
+      v-model="isAssistancesModalOpen"
+      :beneficiary="selectedBeneficiaryForAssistances"
     />
 
     <AppConfirmDialog
@@ -84,7 +92,7 @@ import { useAuthStore } from '@/stores/authStore'
 import { useBeneficiaryStore } from '@/stores/beneficiaryStore'
 import { useFinancialAssistanceStore } from '@/stores/financialAssistanceStore'
 import { useInKindAssistanceStore } from '@/stores/inKindAssistanceStore'
-
+import BeneficiaryAssistancesModal from './BeneficiaryAssistancesModal.vue'
 // استيراد المكونات الأساسية
 import AppInput from '@/components/ui/AppInput.vue'
 import AppConfirmDialog from '@/components/ui/AppConfirmDialog.vue'
@@ -261,5 +269,16 @@ const handleSaveInKind = async (formData) => {
   } finally {
     isSavingInKind.value = false
   }
+}
+
+// === إدارة عرض سجل المساعدات (المالية والعينية) ===
+const isAssistancesModalOpen = ref(false)
+const selectedBeneficiaryForAssistances = ref(null)
+
+const openAssistancesModal = async (beneficiary) => {
+  selectedBeneficiaryForAssistances.value = beneficiary
+  isAssistancesModalOpen.value = true
+  // جلب البيانات من الباك إند عبر الـ Store بمجرد فتح النافذة
+  await beneficiaryStore.fetchBeneficiaryAssistances(beneficiary.id)
 }
 </script>

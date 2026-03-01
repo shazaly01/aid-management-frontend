@@ -1,3 +1,4 @@
+//src\stores\beneficiaryStore.js
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import beneficiaryService from '@/services/beneficiaryService'
@@ -6,6 +7,7 @@ export const useBeneficiaryStore = defineStore('beneficiary', () => {
   const beneficiaries = ref([])
   const pagination = ref({})
   const currentBeneficiary = ref(null)
+  const beneficiaryAssistances = ref(null)
   const loading = ref(false)
   const error = ref(null)
 
@@ -82,10 +84,26 @@ export const useBeneficiaryStore = defineStore('beneficiary', () => {
     }
   }
 
+  async function fetchBeneficiaryAssistances(id) {
+    loading.value = true
+    error.value = null
+    beneficiaryAssistances.value = null // تصفير البيانات القديمة
+    try {
+      const response = await beneficiaryService.getAssistances(id)
+      beneficiaryAssistances.value = response.data.data
+    } catch (err) {
+      error.value = 'Failed to fetch beneficiary assistances.'
+      console.error(err)
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     beneficiaries,
     pagination,
     currentBeneficiary,
+    beneficiaryAssistances,
     loading,
     error,
     fetchBeneficiaries,
@@ -93,5 +111,6 @@ export const useBeneficiaryStore = defineStore('beneficiary', () => {
     createBeneficiary,
     updateBeneficiary,
     deleteBeneficiary,
+    fetchBeneficiaryAssistances,
   }
 })

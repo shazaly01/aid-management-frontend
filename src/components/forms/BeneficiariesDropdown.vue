@@ -1,3 +1,4 @@
+<!--src\components\forms\BeneficiariesDropdown.vue-->
 <template>
   <div>
     <AppDropdown

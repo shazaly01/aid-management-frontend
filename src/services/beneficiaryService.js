@@ -1,3 +1,4 @@
+//src\services\beneficiaryService.js
 import apiClient from './apiClient'
 
 const resource = '/beneficiaries'
@@ -12,6 +13,10 @@ export default {
   find(id) {
     // نمرر المعرف (الذي قد يكون DECIMAL 18 رقم) كما هو
     return apiClient.get(`${resource}/${id}`)
+  },
+
+  getAssistances(id) {
+    return apiClient.get(`${resource}/${id}/assistances`)
   },
 
   create(payload) {

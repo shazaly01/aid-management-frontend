@@ -104,11 +104,17 @@ const route = useRoute()
 const allNavLinks = shallowRef([
   { name: 'لوحة التحكم', routeName: 'Dashboard', icon: HomeIcon, permission: 'dashboard.view' },
   {
-    name: 'المستفيدون والمساعدات',
+    name: 'المساعدات',
     icon: UserGroupIcon,
     permission: 'beneficiary.view',
     children: [
+      { name: 'المناطق السكنية', routeName: 'AreasList', permission: 'area.view' },
       { name: 'المستفيدون', routeName: 'BeneficiariesList', permission: 'beneficiary.view' },
+      {
+        name: 'مركز الرسائل (SMS)',
+        routeName: 'MessageCenter',
+        permission: 'message.view',
+      },
       {
         name: 'المساعدات العينية',
         routeName: 'InKindAssistancesList',

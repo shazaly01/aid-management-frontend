@@ -1,3 +1,4 @@
+<!--src\components\ui\AppInput.vue-->
 <template>
   <div>
     <!-- [مُعدَّل] تم تطبيق كلاسات الوضعين الفاتح والليلي -->
